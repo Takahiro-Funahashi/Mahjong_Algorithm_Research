@@ -9,7 +9,8 @@
 4.実行したいPythonバージョンのパスで、以下のコマンドを実行する。
 　python -m venv MJAR
  ※python部分がPythonバージョンのpathに置き換える。
-
+  Linux
+  source ./MJAR_LINUX/bin/activate  
 
 ■仮想環境の実行
 1.コマンドプロンプトを起動する。
