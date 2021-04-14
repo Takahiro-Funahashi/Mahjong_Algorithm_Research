@@ -6,6 +6,8 @@ import tkinter as tk
 import class_MJ_Pai as PaiIMG
 import class_MJ_SheyPai as Pai
 
+FILE_NAME = 'save_haipai.pckl'
+
 class Test_Haipai(Pai.class_MJ_SheyPai):
     def __init__(self):
         super().__init__()
@@ -116,6 +118,8 @@ class Test_Haipai(Pai.class_MJ_SheyPai):
             InFrame0, width=4, text='自模',command=self.cmd_tsumo)
         self.btn_ron = tk.Button(
             InFrame0, width=4, text='栄和',command=self.cmd_ron)
+        self.btn_auto = tk.Button(
+            InFrame0, width=4, text='自動',command=self.cmd_auto)
 
         self.spinboxBa.pack(side=tk.LEFT,anchor=tk.W,padx=2)
         self.labelBa.pack(side=tk.LEFT,anchor=tk.W,padx=2)
@@ -129,6 +133,7 @@ class Test_Haipai(Pai.class_MJ_SheyPai):
         self.btn_akan.pack(side=tk.LEFT,anchor=tk.W,padx=2)
         self.btn_tsumo.pack(side=tk.LEFT,anchor=tk.W,padx=2)
         self.btn_ron.pack(side=tk.LEFT,anchor=tk.W,padx=2)
+        self.btn_auto.pack(side=tk.LEFT,anchor=tk.W,padx=6)
 
         self.choice_canvas = tk.Canvas(
                 InFrame1, bg='green', width=max(b_width,c_width,h_width,n_width), height=c_height)
@@ -382,11 +387,11 @@ class Test_Haipai(Pai.class_MJ_SheyPai):
         self.create_dialog()
 
     def file_save(self):
-        with open('save_haipai.txt','wb') as f:
+        with open(f'{FILE_NAME}','wb') as f:
             str_data = pickle.dump(self.haipai_list,f)
 
     def file_open(self):
-        with open('save_haipai.txt','rb') as f:
+        with open(f'{FILE_NAME}','rb') as f:
             self.haipai_list = pickle.load(f)
 
         self.haipai = [None for _ in range(14)]
@@ -697,6 +702,26 @@ class Test_Haipai(Pai.class_MJ_SheyPai):
         print(self.haipai,self.naki_list)
         pass
 
+    def cmd_auto(self):
+        SPai = Pai.class_MJ_SheyPai()
+        pai_list = SPai.create_haiyama(num_player=4)[0][:14]
+        pai_list = SPai.set_haipai_char(
+            pai_list, isAka=True)[0]
+
+        pai_list.sort()
+
+        self.haipai = pai_list
+        self.naki_list.clear()
+
+        self.clear_canvas()
+
+        for i, hai in enumerate(self.haipai):
+            if hai is not None:
+                self._draw_haipai_(pai_index=hai,pos_index=i)
+                img = self.PAI_IMG[hai]
+
+        return
+
 class PopCheySelect():
     def __init__(self,parent,image_set):
         W, H = 0, 1
@@ -813,7 +838,6 @@ class PopCheySelect():
             self.select_set = int(pai_index.strip('Chey_'))
         else:
             self.select_set = None
-
 
 if __name__ == '__main__':
     Test_Haipai().run()

@@ -1,0 +1,53 @@
+GitHubにリポジトリを作成する。
+
+1.SSH_keyの作成
+ssh-keygen -t rsa -b 4096 -C "tf_home_mail@hotmail.co.jp"
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\Funahashi/.ssh/id_rsa): 
+C:\Users\Funahashi/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): tf19750728
+Enter same passphrase again: tf19750728
+Your identification has been saved in C:\Users\Funahashi/.ssh/id_rsa.        
+Your public key has been saved in C:\Users\Funahashi/.ssh/id_rsa.pub.        
+The key fingerprint is:
+SHA256:ON1IlF0mhdvYLr2n/Z3vo2hAypmiOo6OT+T/8mkFg/k tf_home_mail@hotmail.co.jp
+The key's randomart image is:
++---[RSA 4096]----+
+|        .o.++    |
+|       .. oo     |
+|     o  .  =     |
+|    o o+ +o o    |
+|  .  .+oS .o     |
+| o   .E*... o    |
+|  o . ..  .. .   |
+|oo o. ..   .o...o|
+|==+ .=+   ...+o+B|
++----[SHA256]-----+
+
+2.クリップボードにコピーする。
+※VScodeのターミナルではエラーになる
+clip < C:\Users\Funahashi/.ssh/id_rsa.pub
+
+3.GitHubアカウントにログインして、Settingから「SSH and GPG keys」を選択する。
+
+4.「New SSH key」を選択し、タイトルおよびクリップボードの内容をペーストして作成する。
+GitHubアカウントのパスワードを尋ねられる。
+
+5.鍵設定の確認
+ssh -T git@github.com
+Enter passphrase for key 'C:\Users\Funahashi/.ssh/id_rsa':tf19750728
+Hi t-funahashi! You've successfully authenticated, but GitHub does not provide shell access.
+
+6.GitHubアカウントで「repositories」に移動し、Newを押す。
+
+7.RepositoryNameを入力し、CreateRepositoryを押す。
+
+8.作成完了ページから、gitのURLをクリップボードにコピーする。
+
+9.VScodeにて、remote登録する。
+git remote add origin https://github.com/t-funahashi/Mahjong_Algorithm_Research.git
+
+10.Pushする。
+git push origin master
