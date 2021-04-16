@@ -41,6 +41,7 @@ def syuntsu(haipai_Set):
         k, s = list(), list()
 
         for tp in [man,pin,sou]:
+            tp.sort()
             num_list = pai_cut(tp)
 
             if num_list:
@@ -55,6 +56,8 @@ def syuntsu(haipai_Set):
                     if pai1 and pai2:
                         pai = tp[i]
                         s.append([pai,pai1,pai2])
+                    if p2 > 9:
+                        continue
                     if pai1 and not pai2:
                         pai = tp[i]
                         k.append([pai,pai1])
@@ -68,6 +71,7 @@ if __name__ == '__main__':
         haipai_list = pickle.load(f)
 
     for haipai in haipai_list:
+        haipai['haipai'].pop(-1)
         print(haipai)
         toustu,anko,ankan = toitsu_anko_ankan(haipai)
         print(f'対子：{toustu},暗刻：{anko},暗槓：{ankan}')
