@@ -6,3 +6,4 @@ Output/
 build/
 dist/
 log/
+ENV_WIN/
