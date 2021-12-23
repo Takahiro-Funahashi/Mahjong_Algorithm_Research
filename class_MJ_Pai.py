@@ -2,8 +2,6 @@ import os
 
 from PIL import Image, ImageTk, ImageDraw
 
-import random
-import sys
 import tkinter as tk
 
 # 牌山の列数
@@ -24,7 +22,8 @@ NUM_TYPES = 4
 TOTAL_PAI = ((NUM_PATTERN-1)*NUM_PAI+NUM_TSUU_PAI+NUM_3GEN_PAI)*NUM_TYPES
 
 # 表示牌サイズ
-PAI_SIZE = (30,40)
+PAI_SIZE = (30, 40)
+
 
 class class_MJ_Pai (object):
     # ---[0:初期値
@@ -62,7 +61,7 @@ class class_MJ_Pai (object):
         return
 
     def _image_pai_(self):
-        #imageフォルダ内のファイル名称特定
+        # imageフォルダ内のファイル名称特定
         self.HEAD_N_DEF = [
             'man', 'pin', 'sou', 'ji',
         ]
@@ -113,6 +112,7 @@ class class_MJ_Pai (object):
 
         return
 
+
 if __name__ == '__main__':
     Pai = class_MJ_Pai()
 
@@ -130,14 +130,14 @@ if __name__ == '__main__':
     Pai._image_pai_()
 
     canvas = tk.Canvas(
-            _view_, bg='green', width=width, height=height)
+        _view_, bg='green', width=width, height=height)
     canvas.pack()
 
     # 全種類表示テスト
     for y, types in enumerate(Pai.PAI_DEF):
         for x, hai in enumerate(types):
             for i in range(4):
-                if i == 3 and hai%10 == 5 and hai < 40:
+                if i == 3 and hai % 10 == 5 and hai < 40:
                     hai += 100
                 img = Pai.PAI_IMG[hai]
                 canvas.create_image(
@@ -146,6 +146,3 @@ if __name__ == '__main__':
                     image=img, anchor=tk.NW)
 
     _view_.mainloop()
-
-
-

@@ -1,8 +1,8 @@
-import copy
 import pickle
 import collections
 
 FILE_NAME = 'save_haipai.pckl'
+
 
 def toitsu_anko_ankan(haipai_Set):
     toustu = set()
@@ -19,7 +19,8 @@ def toitsu_anko_ankan(haipai_Set):
             if v == 4:
                 ankan.add(k)
 
-    return toustu,anko,ankan
+    return toustu, anko, ankan
+
 
 def syuntsu(haipai_Set):
     if 'haipai' in haipai_Set:
@@ -28,7 +29,7 @@ def syuntsu(haipai_Set):
         pin = list()
         sou = list()
         for pai in haipai:
-            syubetu = int((pai%100)/10)
+            syubetu = int((pai % 100)/10)
             if syubetu == 1:
                 man.append(pai)
             if syubetu == 2:
@@ -37,10 +38,10 @@ def syuntsu(haipai_Set):
                 sou.append(pai)
 
         def pai_cut(l):
-            return [ p%10 for p in l]
+            return [p % 10 for p in l]
         k, s = list(), list()
 
-        for tp in [man,pin,sou]:
+        for tp in [man, pin, sou]:
             tp.sort()
             num_list = pai_cut(tp)
 
@@ -55,27 +56,26 @@ def syuntsu(haipai_Set):
 
                     if pai1 and pai2:
                         pai = tp[i]
-                        s.append([pai,pai1,pai2])
+                        s.append([pai, pai1, pai2])
                     if p2 > 9:
                         continue
                     if pai1 and not pai2:
                         pai = tp[i]
-                        k.append([pai,pai1])
+                        k.append([pai, pai1])
                     if not pai1 and pai2:
                         pai = tp[i]
-                        k.append([pai,pai2])
+                        k.append([pai, pai2])
     return k, s
 
+
 if __name__ == '__main__':
-    with open(f'{FILE_NAME}','rb') as f:
+    with open(f'{FILE_NAME}', 'rb') as f:
         haipai_list = pickle.load(f)
 
     for haipai in haipai_list:
         haipai['haipai'].pop(-1)
         print(haipai)
-        toustu,anko,ankan = toitsu_anko_ankan(haipai)
+        toustu, anko, ankan = toitsu_anko_ankan(haipai)
         print(f'対子：{toustu},暗刻：{anko},暗槓：{ankan}')
-        kouho,syun = syuntsu(haipai)
+        kouho, syun = syuntsu(haipai)
         print(f'順子：{syun},候補：{kouho}')
-
-
